@@ -18,6 +18,9 @@ public class OreSwapper {
 
         for(Ore ore : FortuneOres.oreStorage)
         {
+            if(!ore.enabled)
+                continue;
+            
             for(String oreName : ore.oreNames)
             {
                 addOre(oreName, ore);
