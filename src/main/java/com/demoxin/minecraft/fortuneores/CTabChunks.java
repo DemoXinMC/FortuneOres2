@@ -7,18 +7,18 @@ import net.minecraft.item.ItemStack;
 public class CTabChunks extends CreativeTabs
 {
     private ItemStack tabLabel;
-    
-	public CTabChunks(int fID, String fName) { super(fID, fName); }
-	
-	@Override
-	public ItemStack getIconItemStack()
-	{
-	    if(tabLabel == null)
-	    {
-	        tabLabel = new ItemStack(FortuneOres.itemChunk, 0);
-	    }
-		return tabLabel;
-	}
+
+    public CTabChunks(int id, String name) { super(id, name); }
+
+    @Override
+    public ItemStack getIconItemStack()
+    {
+        if(tabLabel == null)
+        {
+            tabLabel = new ItemStack(FortuneOres.itemChunk, 0);
+        }
+        return tabLabel;
+    }
 
     @Override
     public Item getTabIconItem()

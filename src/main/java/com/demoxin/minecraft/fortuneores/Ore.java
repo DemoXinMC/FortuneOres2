@@ -8,33 +8,33 @@ public class Ore
     public int meta;
     public boolean enabled;
     public int dropCount;
-    
+
     public float xpSmelt;
     public float xpDrop;
-    
+
     public ArrayList<String> oreNames;
     public ArrayList<String> ingotNames;
-    
-    public Ore(String fName, int fMeta)
+
+    public Ore(String oreName, int oreMeta)
     {
-        name = fName;
-        meta = fMeta;
-        
+        name = oreName;
+        meta = oreMeta;
+
         xpSmelt = 0;
         xpDrop = 0;
-        
+
         oreNames = new ArrayList<String>();
         ingotNames = new ArrayList<String>();
     }
-    
-    public void addOreName(String fName)
+
+    public void addOreName(String name)
     {
-        oreNames.add("ore" + fName);
-        oreNames.add("oreNether" + fName);
+        oreNames.add("ore" + name);
+        oreNames.add("oreNether" + name);
     }
-    
-    public void addIngotName(String fName)
+
+    public void addIngotName(String name)
     {
-        ingotNames.add("ingot" + fName);
+        ingotNames.add("ingot" + name);
     }
 }
