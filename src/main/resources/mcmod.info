@@ -1,0 +1,9 @@
+[{
+  "modid": "FortuneOres",
+  "name": "FortuneOres",
+  "description": "Ores now break into chunks, supporting the Fortune and Silk Touch enchantments as other ores like Diamond and Coal do.",
+  "authors": ["DemoXin"],
+  "url": "http://minecraft.demoxin.com/FortuneOres",
+  "version": "${version}",
+  "mcversion": "${mcversion}"
+}]
