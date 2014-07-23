@@ -35,6 +35,8 @@ public class OreSwapper {
         int dropCount = ore.dropCount;
         if(oreName.contains("Nether"))
             dropCount *= 2;
+        if(oreName.startsWith("denseore"))
+            dropCount *= 3;
 
         dropMap.put(oreID, new DropStorage(ore.meta, dropCount));
     }

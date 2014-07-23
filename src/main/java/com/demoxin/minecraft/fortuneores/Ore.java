@@ -31,6 +31,7 @@ public class Ore
     {
         oreNames.add("ore" + name);
         oreNames.add("oreNether" + name);
+        oreNames.add("denseore" + name);
     }
 
     public void addIngotName(String name)

@@ -2,8 +2,8 @@
   "modid": "FortuneOres",
   "name": "FortuneOres",
   "description": "Ores now break into chunks, supporting the Fortune and Silk Touch enchantments as other ores like Diamond and Coal do.",
-  "authors": ["DemoXin"],
-  "url": "http://minecraft.demoxin.com/FortuneOres",
-  "version": "${version}",
-  "mcversion": "${mcversion}"
+  "authors": ["DemoXin", "HotelCalifornia"],
+  "url": "http://minecraft.curseforge.com/mc-mods/222628-fortune-ores-2",
+  "version": "2.0.0",
+  "mcversion": "1.7.10"
 }]

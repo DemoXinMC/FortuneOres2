@@ -76,14 +76,17 @@ public class FortuneOres {
 
     private void setupOres()
     {
+        // Vanilla
         addOre("Iron");
         addOre("Gold");
 
+        // Common Ores
         addOre("Copper");
         addOre("Tin");
         addOre("Lead");
         addOre("Silver");
 
+        // Less Common Ores
         addOre("Nickel");
         addOre("Platinum");
         addOre("Aluminum");
@@ -92,15 +95,48 @@ public class FortuneOres {
         oreStorage.get(nextMeta-1).addIngotName("Aluminium");
         oreStorage.get(nextMeta-1).addIngotName("NaturalAluminum");
 
+        // TiCon Ores
         addOre("Cobalt");
         addOre("Ardite");
 
+        // Metallurgy Base
         addOre("Manganese");
+        
+        // Metallurgy Precious
         addOre("Zinc");
+        
+        // Metallurgy Nether
+        addOre("Ignatius");
+        addOre("ShadowIron");
+        addOre("Lemurite");
+        addOre("Midasium");
+        addOre("Vyroxeres");
+        addOre("Ceruclase");
+        addOre("Alduorite");
+        addOre("Kalendrite");
+        addOre("Vulcanite");
+        addOre("Sanguinite");
+        
+        // Metallurgy Fantasy
+        addOre("Prometheum");
+        addOre("DeepIron");
+        addOre("Infuscolium");
+        addOre("Oureclase");
+        addOre("AstralSilver");
+        addOre("Carmot");
+        addOre("Mithril");
+        oreStorage.get(nextMeta-1).addOreName("Mythril");
+        oreStorage.get(nextMeta-1).addIngotName("Mythril");
+        addOre("Rubracium");
+        addOre("Orichalcum");
+        addOre("Adamantine");
+        addOre("Atlarus");
 
+        // Metallurgy End
         addOre("Eximite");
         addOre("Meutoite");
 
+        // Factorization
         addOre("DarkIron");
     }
 

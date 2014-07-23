@@ -45,7 +45,7 @@ public class ItemChunk extends Item
         for (int i = 0; i < FortuneOres.nextMeta; i++)
         {
             renderStorage.add(i, new RenderStorage());
-            renderStorage.get(i).icon = iconRegister.registerIcon(FortuneOres.MODID + ":" + FortuneOres.oreStorage.get(i).name.toLowerCase() + "chunk");
+            renderStorage.get(i).icon = iconRegister.registerIcon(FortuneOres.MODID + ":" + FortuneOres.oreStorage.get(i).name.toLowerCase());
             renderStorage.get(i).unlocalizedName = "item.orechunks." + FortuneOres.oreStorage.get(i).name.toLowerCase();
 
             if(!FortuneOres.oreStorage.get(i).enabled)
