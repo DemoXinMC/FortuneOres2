@@ -10,8 +10,11 @@ public class Ore
     public int dropCount;
 
     public float xpSmelt;
-    public float xpDrop;
+    public int xpDropMin;
+    public int xpDropMax;
 
+    public boolean oreDicted;
+    
     public ArrayList<String> oreNames;
     public ArrayList<String> ingotNames;
 
@@ -21,17 +24,25 @@ public class Ore
         meta = oreMeta;
 
         xpSmelt = 0;
-        xpDrop = 0;
+        xpDropMin = 0;
+        xpDropMax = 0;
 
         oreNames = new ArrayList<String>();
         ingotNames = new ArrayList<String>();
+    }
+    
+    public Ore(String oreName, int oreMeta, int droppedXPMin, int droppedXPMax, float xpSmelt)
+    {
+        this(oreName, oreMeta);
+        this.xpSmelt = xpSmelt;
+        xpDropMin = droppedXPMin;
+        xpDropMax = droppedXPMax;
     }
 
     public void addOreName(String name)
     {
         oreNames.add("ore" + name);
         oreNames.add("oreNether" + name);
-        oreNames.add("denseore" + name);
     }
 
     public void addIngotName(String name)

@@ -7,6 +7,8 @@ public class Config
     public Config(Configuration config)
     {
         config.load();
+        
+        FortuneOres.allowProcessing = config.get("AAAGeneral", "AllowProcessing", true).getBoolean(true);
 
         for(Ore ore : FortuneOres.oreStorage)
         {
