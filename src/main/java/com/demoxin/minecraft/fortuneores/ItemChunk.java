@@ -11,7 +11,8 @@ import net.minecraft.util.IIcon;
 
 public class ItemChunk extends Item
 {
-    private ArrayList<RenderStorage> renderStorage;
+    private ArrayList<IIcon> iconStorage;
+    private ArrayList<String> nameStorage;
     private IIcon mysterious;
 
     public ItemChunk()
@@ -21,68 +22,68 @@ public class ItemChunk extends Item
         setCreativeTab(FortuneOres.creativeTab);
         this.setMaxDamage(0);
         this.setHasSubtypes(true);
+        
+        createNames();
     }
 
     @Override
     public IIcon getIconFromDamage(int meta)
     {
-        if(meta > renderStorage.size()
-                || renderStorage.get(meta) == null
-                || renderStorage.get(meta).unlocalizedName == null
-                || renderStorage.get(meta).unlocalizedName.isEmpty())
+        if(meta > iconStorage.size() || iconStorage.get(meta) == null)
         {
             return mysterious;
         }
-        return renderStorage.get(meta).icon;
+        return iconStorage.get(meta);
 
+    }
+    
+    public void createNames()
+    {
+        nameStorage = new ArrayList<String>();
+        for (int i = 0; i < FortuneOres.nextMeta; i++)
+        {
+            nameStorage.add(i, "item.orechunks." + FortuneOres.oreStorage.get(i).name.toLowerCase());
+
+            if(!FortuneOres.oreStorage.get(i).enabled)
+            {
+                nameStorage.remove(i);
+                nameStorage.add(i, "item.orechunks.mysterious");
+            }
+                
+        }
     }
 
     @Override
     public void registerIcons(IIconRegister iconRegister)
     {
         mysterious = iconRegister.registerIcon(FortuneOres.MODID + ":mysteriouschunk");
-        renderStorage = new ArrayList<RenderStorage>();
+        iconStorage = new ArrayList<IIcon>();
         for (int i = 0; i < FortuneOres.nextMeta; i++)
-        {
-            renderStorage.add(i, new RenderStorage());
-            renderStorage.get(i).icon = iconRegister.registerIcon(FortuneOres.MODID + ":" + FortuneOres.oreStorage.get(i).name.toLowerCase());
-            renderStorage.get(i).unlocalizedName = "item.orechunks." + FortuneOres.oreStorage.get(i).name.toLowerCase();
-
-            if(!FortuneOres.oreStorage.get(i).enabled)
-                renderStorage.get(i).unlocalizedName = "item.orechunks.mysterious";
-        }
+            iconStorage.add(i, iconRegister.registerIcon(FortuneOres.MODID + ":" + FortuneOres.oreStorage.get(i).name.toLowerCase()));
     }
 
     @Override
     public String getUnlocalizedName(ItemStack itemStack)
     {
+        if(nameStorage == null)
+            return "item.orechunks.mysterious";
+        
         int meta = itemStack.getItemDamage();
 
-        if(meta > renderStorage.size()
-                || renderStorage.get(meta) == null
-                || renderStorage.get(meta).unlocalizedName == null
-                || renderStorage.get(meta).unlocalizedName.isEmpty())
-        {
+        if(meta > nameStorage.size() || nameStorage.get(meta) == null)
             return "item.orechunks.mysterious";
-        }
 
-        return renderStorage.get(meta).unlocalizedName;
+        return nameStorage.get(meta);
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public void getSubItems(Item item, CreativeTabs tabs, List list)
     {
-        for(int i = 0; i < renderStorage.size(); ++i)
+        for(int i = 0; i < nameStorage.size(); ++i)
         {
             ItemStack oreChunk = new ItemStack(this, 1, i);
             list.add(oreChunk);
         }
-    }
-
-    protected class RenderStorage
-    {
-        IIcon icon;
-        String unlocalizedName;
     }
 }
