@@ -4,6 +4,6 @@
   "description": "Ores now break into chunks, supporting the Fortune and Silk Touch enchantments as other ores like Diamond and Coal do.",
   "authors": ["DemoXin", "KurtusReto"],
   "url": "http://minecraft.curseforge.com/mc-mods/222628-fortune-ores-2",
-  "version": "2.0.4",
-  "mcversion": "1.7.10"
+  "version": "3.0.1",
+  "mcversion": "1.9"
 }]

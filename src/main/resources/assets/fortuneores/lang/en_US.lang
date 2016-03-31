@@ -17,6 +17,10 @@ item.orechunks.eximite.name=Eximite Chunk
 item.orechunks.meutoite.name=Meutoite Chunk
 item.orechunks.darkiron.name=Dark Iron Chunk
 
+item.orechunks.uranium.name=Uranium Chunk
+item.orechunks.yellorium.name=Yellorium Chunk
+item.orechunks.osmium.name=Osmium Chunk
+
 item.orechunks.ignatius.name=Ignatius Chunk
 item.orechunks.shadowiron.name=Shadow Iron Chunk
 item.orechunks.lemurite.name=Lemurite Chunk

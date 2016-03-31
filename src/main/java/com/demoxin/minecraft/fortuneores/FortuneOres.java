@@ -4,45 +4,47 @@ import java.util.ArrayList;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.oredict.OreDictionary;
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.EventHandler;
-import cpw.mods.fml.common.Mod.Instance;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.Mod.Instance;
+import net.minecraftforge.fml.common.SidedProxy;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 @Mod(modid = FortuneOres.MODID, name = FortuneOres.NAME, version = FortuneOres.VERSION)
 public class FortuneOres {
-    // Mod Info
     public static final String MODID = "FortuneOres";
     public static final String NAME = "FortuneOres";
-    public static final String VERSION = "2.0.4";
-    // Mod Info End
+    public static final String VERSION = "3.0.0";
 
     // Singleton
     @Instance("FortuneOres")
     public static FortuneOres instance;
     public static Config config;
-    public static ArrayList<Ore> oreStorage;
+    
+    @SidedProxy(clientSide="com.demoxin.minecraft.fortuneores.ProxyClient", serverSide="com.demoxin.minecraft.fortuneores.ProxyCommon")
+    public static ProxyCommon proxy;
+    
+    public static ArrayList<Ore> ores;
 
     public static CreativeTabs creativeTab;
     public static Item itemChunk;
 
-    public static int nextMeta;
-    
-    public static boolean allowProcessing;
+    private int nextMeta;
 
     public FortuneOres()
     {
-        nextMeta = 0;
-        oreStorage = new ArrayList<Ore>();
-
         setupOres();
+    }
+    
+    static
+    {
+        if(instance == null)
+            instance = new FortuneOres();
     }
 
     @EventHandler
@@ -52,42 +54,48 @@ public class FortuneOres {
         creativeTab = new CTabChunks(CreativeTabs.getNextID(), "OreChunks");
         itemChunk = new ItemChunk();
         GameRegistry.registerItem(itemChunk, "oreChunk");
-        MinecraftForge.EVENT_BUS.register(new OreDictHandler());
+        proxy.preInit();
     }
 
     @EventHandler
     public void init(FMLInitializationEvent event)
     {
-        addOreDicting();
+        OreDictionaryMagic.addOreDicting();
         MinecraftForge.EVENT_BUS.register(new OreSwapper());
+        MinecraftForge.EVENT_BUS.register(new OreDictionaryMagic());
+        proxy.init();
     }
 
     @EventHandler
     public void postInit(FMLPostInitializationEvent event)
     {
-        addSmelting();
+        OreDictionaryMagic.addSmelting();
+        proxy.postInit();
     }
 
-    public void addOre(String oreName)
+    public Ore addOre(String oreName)
     {
-        Ore newOre = new Ore(oreName, nextMeta);
-        newOre.addOreName(oreName);
-        newOre.addIngotName(oreName);
-        oreStorage.add(newOre);
-        nextMeta++;
+        return this.addOre(oreName, 0, 0, 0);
     }
     
-    public void addOre(String oreName, int xpMin, int xpMax, float xpSmelt)
+    public Ore addOre(String oreName, int xpMin, int xpMax, float xpSmelt)
     {
         Ore newOre = new Ore(oreName, nextMeta, xpMin, xpMax, xpSmelt);
         newOre.addOreName(oreName);
         newOre.addIngotName(oreName);
-        oreStorage.add(newOre);
+        ores.add(newOre);
         nextMeta++;
+        return newOre;
     }
 
     private void setupOres()
     {
+        if(ores != null)
+            return;
+        
+        nextMeta = 0;
+        ores = new ArrayList<Ore>();
+        
         // Vanilla
         addOre("Iron", 1, 5, 0.4f);
         addOre("Gold", 2, 6, 1.0f);
@@ -101,11 +109,7 @@ public class FortuneOres {
         // Less Common Ores
         addOre("Nickel", 1, 5, 0.4f);
         addOre("Platinum", 2, 6, 1.0f);
-        addOre("Aluminum", 1, 5, 0.4f);
-        oreStorage.get(nextMeta-1).addOreName("Aluminium");
-        oreStorage.get(nextMeta-1).addOreName("NaturalAluminum");
-        oreStorage.get(nextMeta-1).addIngotName("Aluminium");
-        oreStorage.get(nextMeta-1).addIngotName("NaturalAluminum");
+        addOre("Aluminum", 1, 5, 0.4f).addNames("Aluminium").addNames("NaturalAluminum");
 
         // TiCon Ores
         addOre("Cobalt", 4, 7, 0.8f);
@@ -136,9 +140,7 @@ public class FortuneOres {
         addOre("Oureclase", 3, 7, 0.9f);
         addOre("AstralSilver", 3, 7, 0.9f);
         addOre("Carmot", 3, 7, 0.9f);
-        addOre("Mithril", 3, 7, 0.9f);
-        oreStorage.get(nextMeta-1).addOreName("Mythril");
-        oreStorage.get(nextMeta-1).addIngotName("Mythril");
+        addOre("Mithril", 3, 7, 0.9f).addNames("Mythril");
         addOre("Rubracium", 3, 7, 0.9f);
         addOre("Orichalcum", 3, 7, 0.9f);
         addOre("Adamantine", 3, 7, 0.9f);
@@ -150,57 +152,10 @@ public class FortuneOres {
 
         // Factorization
         addOre("DarkIron", 1, 5, 0.4f);
-    }
-    
-    private void addOreDicting()
-    {
-        for(Ore ore : oreStorage)
-        {
-            boolean doOreDict = true;
-            if(!ore.enabled)
-                doOreDict = false;
-
-            boolean matched = false;
-            for(String oreDict : ore.oreNames)
-            {
-                if(!(OreDictionary.getOres(oreDict).isEmpty()))
-                    matched = true;
-            }
-
-            if(!matched)
-                doOreDict = false;
-
-            if(doOreDict)
-            {
-                ItemStack chunk = new ItemStack(itemChunk, 1, ore.meta);
-                for(String oreName : ore.oreNames)
-                {
-                    if(!oreName.contains("Nether"))
-                        OreDictionary.registerOre(oreName, chunk);
-                }
-            }
-        }
-    }
-
-    private void addSmelting()
-    {
-        for(Ore ore : oreStorage)
-        {
-            ItemStack ingot = null;
-
-            for(String ingotName : ore.ingotNames)
-            {
-                ArrayList<ItemStack> ingots = OreDictionary.getOres(ingotName);
-                if(!ingots.isEmpty())
-                    ingot = ingots.get(0);
-            }
-
-            if(ingot != null)
-            {
-                ingot.stackSize = 1;
-                ItemStack chunk = new ItemStack(itemChunk, 1, ore.meta);
-                GameRegistry.addSmelting(chunk, ingot, ore.xpSmelt);
-            }
-        }
+        
+        // Radioactive
+        addOre("Uranium", 1, 5, 0.4f);
+        addOre("Yellorium", 1, 5, 0.4f).addNames("Yellorite");
+        addOre("Osmium", 1, 5, 0.4f);
     }
 }

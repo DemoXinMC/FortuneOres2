@@ -15,7 +15,7 @@ public class CTabChunks extends CreativeTabs
     {
         if(tabLabel == null)
         {
-            tabLabel = new ItemStack(FortuneOres.itemChunk, 0);
+            tabLabel = new ItemStack(FortuneOres.itemChunk);
         }
         return tabLabel;
     }

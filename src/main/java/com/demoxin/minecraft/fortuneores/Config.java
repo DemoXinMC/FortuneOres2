@@ -7,10 +7,8 @@ public class Config
     public Config(Configuration config)
     {
         config.load();
-        
-        FortuneOres.allowProcessing = config.get("AAAGeneral", "AllowProcessing", true).getBoolean(true);
 
-        for(Ore ore : FortuneOres.oreStorage)
+        for(Ore ore : FortuneOres.ores)
         {
             ore.enabled = config.get(ore.name, "Enable", true).getBoolean(true);
             ore.dropCount = config.get(ore.name, "BaseDrop", 1).getInt();
