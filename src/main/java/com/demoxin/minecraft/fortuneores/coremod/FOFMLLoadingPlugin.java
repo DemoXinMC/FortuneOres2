@@ -5,7 +5,7 @@ import java.util.Map;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
 
 @IFMLLoadingPlugin.Name(value = "FortuneOres Black Magic")
-@IFMLLoadingPlugin.MCVersion(value = "1.9")
+@IFMLLoadingPlugin.MCVersion(value = "1.9.4")
 @IFMLLoadingPlugin.SortingIndex(100)
 public class FOFMLLoadingPlugin implements IFMLLoadingPlugin
 {

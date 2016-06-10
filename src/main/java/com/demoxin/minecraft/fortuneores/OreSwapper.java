@@ -33,14 +33,17 @@ public class OreSwapper
             if(te instanceof ISidedInventory) return;
             if(te instanceof IInventory) return;
             IItemHandler handler = null;
-            handler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
             for(EnumFacing side : EnumFacing.VALUES)
             {
-                if(handler != null)
-                    return;
                 handler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side);
+                if(handler != null)
+                    break;
             }
-            if(handler != null) return;
+            if(handler == null)
+                handler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+
+            if(handler != null)
+                return;
         }
 
         ArrayList<ItemStack> newDrops = new ArrayList<ItemStack>();
